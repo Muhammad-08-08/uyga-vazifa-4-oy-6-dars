@@ -2,7 +2,6 @@ let thead = document.querySelector("thead");
 let tbody = document.querySelector("tbody");
 let form = document.querySelector("#crudForm");
 
-// `crudDatas`ni `localStorage`dan yuklash yoki bo'sh massiv sifatida saqlash
 let crudDatas = JSON.parse(localStorage.getItem("crudDatas")) || [
   { id: 1, name: "John Doe", email: "John@example.com", phone: "99-999-99-99" },
   { id: 2, name: "Jane Doe", email: "Jane@example.com", phone: "77-777-77-77" },
@@ -10,7 +9,6 @@ let crudDatas = JSON.parse(localStorage.getItem("crudDatas")) || [
   { id: 4, name: "Bob Doe", email: "Bob@example.com", phone: "97-111-11-11" },
 ];
 
-// Jadval sarlavhasini yaratish
 function renderTableHead() {
   thead.innerHTML = "";
   let tr = document.createElement("tr");
@@ -22,7 +20,6 @@ function renderTableHead() {
   thead.append(tr);
 }
 
-// Jadval ma'lumotlarini yaratish
 function renderTableData(datas) {
   tbody.innerHTML = "";
   datas.forEach((val) => {
@@ -53,12 +50,10 @@ function renderTableData(datas) {
   }
 }
 
-// Ma'lumotlarni localStorage'ga saqlash
 function saveToLocalStorage() {
   localStorage.setItem("crudDatas", JSON.stringify(crudDatas));
 }
 
-// Form submit hodisasi
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   let nameText = document.getElementById("name").value;
@@ -74,19 +69,17 @@ form.addEventListener("submit", (e) => {
     };
     crudDatas.push(newData);
     renderTableData(crudDatas);
-    saveToLocalStorage(); // LocalStorage'ga saqlash
+    saveToLocalStorage();
     form.reset();
   }
 });
 
-// O'chirish funksiyasi
 function onDelete(id) {
   crudDatas = crudDatas.filter((val) => val.id !== id);
   renderTableData(crudDatas);
-  saveToLocalStorage(); // LocalStorage'ni yangilash
+  saveToLocalStorage();
 }
 
-// Tahrirlash funksiyasi
 function onEdit(val) {
   let newName = prompt("Yangi ism kiriting:", val.name);
   let newEmail = prompt("Yangi email kiriting:", val.email);
@@ -99,10 +92,9 @@ function onEdit(val) {
         : item
     );
     renderTableData(crudDatas);
-    saveToLocalStorage(); // LocalStorage'ni yangilash
+    saveToLocalStorage();
   }
 }
 
-// Sahifa yuklanganda jadvalni yaratish
 renderTableHead();
 renderTableData(crudDatas);
